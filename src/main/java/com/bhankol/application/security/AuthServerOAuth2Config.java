@@ -22,6 +22,10 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 
 import java.util.Arrays;
 
+/**
+ * Created by pravingosavi on 21/05/18.
+ */
+
 @Configuration
 @EnableAuthorizationServer
 @PropertySource(value = {"classpath:/application.properties"})
