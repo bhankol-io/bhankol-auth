@@ -1,6 +1,7 @@
 package com.bhankol.application.entity;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -31,6 +32,20 @@ public class User {
 
     private String clientid;
 
+
+    public User(String username, String password, String email, String firstname, String lastname, Integer phone, boolean active, String clientid) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.phone = phone;
+        this.active = active;
+        this.clientid = clientid;
+    }
+
+    public User(){
+    }
 
     public String getUserid() {
         return userid;
@@ -103,6 +118,21 @@ public class User {
 
     public void setClientid(String clientid) {
         this.clientid = clientid;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userid='" + userid + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", phone=" + phone +
+                ", active=" + active +
+                ", clientid='" + clientid + '\'' +
+                '}';
     }
 
     @Override
