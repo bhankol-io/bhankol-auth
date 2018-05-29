@@ -54,10 +54,10 @@ podTemplate(label: 'testing',
 
 
               kubectl apply -f notepad/testing/ -l app=notepad
-              kubectl rollout status deployment notepad-deployment-testing
+              kubectl rollout status deployment authservice-deployment-testing
 
-              kubectl get service notepad-service-testing
-              kubectl get endpoints notepad-service-testing
+              kubectl get service authservice-service-testing
+              kubectl get endpoints authservice-service-testing
             """
           }
 
