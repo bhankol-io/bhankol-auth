@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: authservice-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: authservice
+    spec:
+      containers:
+      - name: authservice
+        image: pravinguru/authservice:2.7
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 8080
+        env:
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: spring-security
+              key: spring.data.mongodb.uri
+
