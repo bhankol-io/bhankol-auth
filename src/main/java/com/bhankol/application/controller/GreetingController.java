@@ -12,6 +12,6 @@ public class GreetingController {
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public String sayHello() {
-        return "Secure  World!";
+        return "Secure Hello World!";
     }
 }
