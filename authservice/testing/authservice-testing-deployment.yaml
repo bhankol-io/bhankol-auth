@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: notepad-deployment-testing
+  namespace: testing
+  labels:
+    app: notepad
+    env: testing
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: notepad
+        env: testing
+    spec:
+      containers:
+      - name: notepad-testing
+        image: AUTHSERVICE_CONTAINER_IMAGE
+        ports:
+        - name: http-port
+          containerPort: 8080
+        env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: testing
+          - name: spring-data-mongodb-uri
+            value: mongodb://mongo-0.mongo.testing:27017/notepad
+          - name: JVM_ARGS
+            value: "-Xmx256m"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+          timeoutSeconds: 3
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          failureThreshold: 6
+          successThreshold: 1
+          timeoutSeconds: 3

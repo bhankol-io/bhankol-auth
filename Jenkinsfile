@@ -50,7 +50,7 @@ podTemplate(label: 'testing',
               kubectl config set-context testing --namespace=testing --cluster=k8s.itbitstechnologies.com --user=k8s.itbitstechnologies.com
               kubectl config use-context testing
 
-              sed -i "s/NOTEPAD_CONTAINER_IMAGE/${DOCKERHUB_USERNAME}\\/${image_name}:${GIT_BRANCH}/" notepad/testing/notepad-testing-deployment.yaml
+              sed -i "s/AUTHSERVICE_CONTAINER_IMAGE/${DOCKERHUB_USERNAME}\\/${image_name}:${GIT_BRANCH}/" authservice/testing/authservice-testing-deployment.yaml
 
 
               kubectl apply -f notepad/testing/ -l app=notepad
@@ -61,28 +61,6 @@ podTemplate(label: 'testing',
             """
           }
 
-        }
-
-
-
-    stage('Deploy release version to Staging environment using RollingUpdate strategy') {
-
-          input "Deploy To Staging Environment?"
-
-          container('kubectl') {
-            sh """
-              kubectl config set-context staging --namespace=staging --cluster=k8s.itbitstechnologies.com --user=k8s.itbitstechnologies.com
-              kubectl config use-context staging
-
-              sed -i "s/NOTEPAD_CONTAINER_IMAGE/${DOCKERHUB_USERNAME}\\/${image_name}:${GIT_BRANCH}/" notepad/staging/notepad-staging-deployment.yaml
-
-              kubectl apply -f notepad/staging/ -l app=notepad
-              kubectl rollout status deployment notepad-deployment-staging
-
-              kubectl get service notepad-service-staging
-              kubectl get endpoints notepad-service-staging
-            """
-          }
         }
 
 
