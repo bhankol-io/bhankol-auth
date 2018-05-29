@@ -23,8 +23,11 @@ spec:
         env:
           - name: SPRING_PROFILES_ACTIVE
             value: testing
-          - name: spring-data-mongodb-uri
-            value: mongodb://mongo-0.mongo.testing:27017/notepad
+          - name: MONGODB_URI
+            valueFrom:
+              secretKeyRef:
+                name: spring-security
+                key: spring.data.mongodb.uri
           - name: JVM_ARGS
             value: "-Xmx256m"
         readinessProbe:
