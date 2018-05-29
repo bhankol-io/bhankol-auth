@@ -18,13 +18,13 @@ podTemplate(label: 'testing',
   try{
       notifySlack('STARTED')
 
-    def image_name = "notepad"
+    def image_name = "auth-service"
 
     checkout scm
 
     dir('app') {
-      stage('Checkout the Notepad application') {
-        git url: 'https://gitlab.com/Pravin_Gosavi/notepad.git', branch: "${GIT_BRANCH}"
+      stage('Checkout the Auth-Service application') {
+        git url: 'https://github.com/bhankol-io/bhankol-auth.git', branch: "${GIT_BRANCH}"
       }
 
       stage('Run Unit/Integration Tests, generate the jar artifact and push it to Artifactory') {
@@ -63,17 +63,7 @@ podTemplate(label: 'testing',
 
         }
 
-    parallel(
-      chrome: {
-        stage('Run Acceptance Tests for Testing Environment on Chrome') {
-          container('maven-chrome') {
-            sh """
-            mvn -B -s /etc/maven/settings.xml clean verify -Pacceptance-tests -Dacceptance.notepad.url=${NOTEPAD_URL} -Dselenium.browser=chrome -Dsurefire.rerunFailingTestsCount=3
-            """
-          }
-        }
-      }
-    )
+
 
     stage('Deploy release version to Staging environment using RollingUpdate strategy') {
 
@@ -95,17 +85,7 @@ podTemplate(label: 'testing',
           }
         }
 
-     parallel(
-           chrome: {
-             stage('Run Acceptance Tests for Staging Environment on Chrome') {
-               container('maven-chrome') {
-                 sh """
-                   mvn -B -s /etc/maven/settings.xml clean verify -Pacceptance-tests -Dacceptance.notepad.url=${NOTEPAD_STAGING_URL} -Dselenium.browser=chrome -Dsurefire.rerunFailingTestsCount=3
-                 """
-               }
-             }
-           }
-         )
+
 
 
 
