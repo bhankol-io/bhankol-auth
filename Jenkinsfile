@@ -18,7 +18,7 @@ podTemplate(label: 'testing',
   try{
       notifySlack('STARTED')
 
-    def image_name = "auth-service"
+    def image_name = "authservice"
 
     checkout scm
 
@@ -28,13 +28,39 @@ podTemplate(label: 'testing',
       }
 
       stage('Run Unit/Integration Tests, generate the jar artifact and push it to Artifactory') {
-              container('maven') {
-                sh 'mvn -B -s /etc/maven/settings.xml clean deploy'
-              }
-            }
+        container('maven') {
+          sh 'mvn -B -s /etc/maven/settings.xml clean deploy'
+        }
+      }
 
-
+      stage('Build and push a new Docker image with the tag based on the Git branch') {
+        container('docker') {
+          sh """
+            docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}
+            docker build -t ${DOCKERHUB_USERNAME}/${image_name}:${GIT_BRANCH} .
+            docker push ${DOCKERHUB_USERNAME}/${image_name}:${GIT_BRANCH}
+          """
+        }
+      }
     }
+
+    stage('Deploy to Testing environment') {
+          container('kubectl') {
+            sh """
+              kubectl config set-context testing --namespace=testing --cluster=k8s.itbitstechnologies.com --user=k8s.itbitstechnologies.com
+              kubectl config use-context testing
+              sed -i "s/AUTHSERVICE_CONTAINER_IMAGE/${DOCKERHUB_USERNAME}\\/${image_name}:${GIT_BRANCH}/" authservice/testing/authservice-testing-deployment.yaml
+              kubectl apply -f authservice/testing/ -l app=authservice
+              kubectl rollout status deployment authservice-deployment-testing
+              kubectl get service authservice-service-testing
+              kubectl get endpoints authservice-service-testing
+            """
+          }
+
+        }
+
+
+
 
 
   } catch (e) {

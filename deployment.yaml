@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: authservice
-        image: pravinguru/authservice:2.7
+        image: pravinguru/authservice:3.0
         resources:
           requests:
             cpu: 100m

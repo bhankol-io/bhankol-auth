@@ -44,9 +44,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("dev")
 public class UserControllerUnitTest {
 
-    private static final String URL_PREFIX ="http://localhost:8080";
-    private String tokenValue = null;
-
     @Autowired
     WebApplicationContext context;
 
