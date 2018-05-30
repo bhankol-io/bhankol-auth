@@ -59,7 +59,25 @@ podTemplate(label: 'testing',
 
         }
 
+    stage('Deploy release version to Staging environment using RollingUpdate strategy') {
 
+          input "Deploy To Staging Environment?"
+
+          container('kubectl') {
+            sh """
+              kubectl config set-context staging --namespace=staging --cluster=k8s.itbitstechnologies.com --user=k8s.itbitstechnologies.com
+              kubectl config use-context staging
+
+              sed -i "s/AUTHSERVICE_CONTAINER_IMAGE/${DOCKERHUB_USERNAME}\\/${image_name}:${GIT_BRANCH}/" authservice/staging/authservice-staging-deployment.yaml
+
+              kubectl apply -f authservice/staging/ -l app=authservice
+              kubectl rollout status deployment authservice-deployment-staging
+
+              kubectl get service authservice-service-staging
+              kubectl get endpoints authservice-service-staging
+            """
+          }
+        }
 
 
 

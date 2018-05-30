@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: authservice-staging
-        image: NOTEPAD_CONTAINER_IMAGE
+        image: AUTHSERVICE_CONTAINER_IMAGE
         ports:
         - name: http-port
           containerPort: 8080
@@ -24,7 +24,7 @@ spec:
           - name: SPRING_PROFILES_ACTIVE
             value: staging
           - name: spring-data-mongodb-uri
-            value: mongodb://mongo-0.mongo.testing:27017/notepad
+            value: mongodb://mongo-0.mongo.staging:27017/notepad
           - name: JVM_ARGS
             value: "-Xmx256m"
         readinessProbe:
