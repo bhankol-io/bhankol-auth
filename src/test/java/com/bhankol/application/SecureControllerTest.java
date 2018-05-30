@@ -34,14 +34,17 @@ import java.util.HashMap;
 @ActiveProfiles("dev")
 public class SecureControllerTest {
 
-    private static final String URL_PREFIX ="http://localhost:8080";
+   // private static final String URL_PREFIX ="http://localhost:8080";
     private String tokenValue = null;
 
-    @Autowired
-    WebApplicationContext context;
+//    @Autowired
+//    WebApplicationContext context;
 
     @Autowired
-    private FilterChainProxy springSecurityFilterChain;
+    private WebApplicationContext wac;
+
+//    @Autowired
+//    private FilterChainProxy springSecurityFilterChain;
 
     @InjectMocks
     SecureController controller;
@@ -49,10 +52,8 @@ public class SecureControllerTest {
     private MockMvc mvc;
 
     @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-        mvc = MockMvcBuilders.webAppContextSetup(context)
-                .addFilter(springSecurityFilterChain).build();
+    public void setup() {
+        this.mvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
     @Test
@@ -85,7 +86,7 @@ public class SecureControllerTest {
                 .with()
                 .params(params)
                 .when()
-                .post(URL_PREFIX + "/oauth/token");
+                .post("/oauth/token");
 
         tokenValue = response.jsonPath()
                 .getString("access_token");
