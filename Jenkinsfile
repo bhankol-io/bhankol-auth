@@ -52,8 +52,8 @@ podTemplate(label: 'testing',
               sed -i "s/AUTHSERVICE_CONTAINER_IMAGE/${DOCKERHUB_USERNAME}\\/${image_name}:${GIT_BRANCH}/" authservice/testing/authservice-testing-deployment.yaml
               kubectl apply -f authservice/testing/ -l app=authservice
               kubectl rollout status deployment authservice-deployment-testing
-              kubectl get service authservice-service-testing
-              kubectl get endpoints authservice-service-testing
+              kubectl get service authservice-service-testing.testing
+              kubectl get endpoints authservice-service-testing.testing
             """
           }
 
