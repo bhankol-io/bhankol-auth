@@ -1,21 +1,21 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: notepad-deployment-testing
+  name: authservice-deployment-testing
   namespace: testing
   labels:
-    app: notepad
+    app: authservice
     env: testing
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: notepad
+        app: authservice
         env: testing
     spec:
       containers:
-      - name: notepad-testing
+      - name: authservice-testing
         image: AUTHSERVICE_CONTAINER_IMAGE
         ports:
         - name: http-port

@@ -1,21 +1,21 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: notepad-deployment-staging
+  name: authservice-deployment-staging
   namespace: staging
   labels:
-    app: notepad
+    app: authservice
     env: staging
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: notepad
+        app: authservice
         env: staging
     spec:
       containers:
-      - name: notepad-staging
+      - name: authservice-staging
         image: NOTEPAD_CONTAINER_IMAGE
         ports:
         - name: http-port
