@@ -27,6 +27,10 @@ podTemplate(label: 'testing',
         git url: 'https://github.com/bhankol-io/bhankol-auth.git', branch: "${GIT_BRANCH}"
       }
 
+
+    }
+
+
   } catch (e) {
           currentBuild.result = 'FAILURE'
           throw e
