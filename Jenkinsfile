@@ -27,6 +27,12 @@ podTemplate(label: 'testing',
         git url: 'https://github.com/bhankol-io/bhankol-auth.git', branch: "${GIT_BRANCH}"
       }
 
+      stage('Run Unit/Integration Tests, generate the jar artifact and push it to Artifactory') {
+              container('maven') {
+                sh 'mvn -B -s /etc/maven/settings.xml clean deploy'
+              }
+            }
+
 
     }
 
