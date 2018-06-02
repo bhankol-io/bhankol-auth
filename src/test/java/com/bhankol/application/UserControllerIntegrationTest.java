@@ -62,24 +62,25 @@ public class UserControllerIntegrationTest {
 
         tokenValue = response.jsonPath()
                 .getString("access_token");
-        System.out.println("+++++++++++++++++++++++++++"+tokenValue);
+
     }
 
-//// =========================================== Create New User ========================================
-//
-//    @Test
-//    public void test_create_new_user_success(){
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.set(HttpHeaders.AUTHORIZATION,"Bearer "+tokenValue);
-//        headers.set("Accept", "application/json;");
-//        headers.set("Content-Type", "application/json");
-//        HttpEntity<User> entity = new HttpEntity<User>(user,headers);
-//        ResponseEntity<User> response = template.exchange(BASE_URI+"/api/user", HttpMethod.POST,entity, User.class);
-//        assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
-//    }
-//
-//    // =========================================== Get All Users ==========================================
-//
+// =========================================== Create New User ========================================
+
+    @Test
+    public void test_create_new_user_success(){
+        System.out.println("+++++++++++++++++++++++++++"+tokenValue);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.AUTHORIZATION,"Bearer "+tokenValue);
+        headers.set("Accept", "application/json;");
+        headers.set("Content-Type", "application/json");
+        HttpEntity<User> entity = new HttpEntity<User>(user,headers);
+        ResponseEntity<User> response = template.exchange(BASE_URI+"/api/user", HttpMethod.POST,entity, User.class);
+        assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
+    }
+
+    // =========================================== Get All Users ==========================================
+
 //    @Test
 //    public void test_get_all_success(){
 //        HttpHeaders headers = new HttpHeaders();
