@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: authservice-service-testing
+  name: authservice-testing
   labels:
     app: authservice
     env: testing
