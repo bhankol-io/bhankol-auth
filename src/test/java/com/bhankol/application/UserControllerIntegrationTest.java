@@ -53,7 +53,7 @@ public class UserControllerIntegrationTest {
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         ResponseEntity<String> response = template.exchange("/oauth/token?username=testuser&password=test&grant_type=password", HttpMethod.POST,entity, String.class);
         System.out.println("+++++++++++++++++++++++++++"+"HELLO2");
-        tokenValue = response.getBody().substring(17,693);
+        tokenValue = response.getBody().substring(17,692);
         System.out.println("+++++++++++++++++++++++++++"+tokenValue);
         System.out.println("+++++++++++++++++++++++++++"+response.getBody());
     }
@@ -62,7 +62,6 @@ public class UserControllerIntegrationTest {
 
     @Test
     public void test_create_new_user_success(){
-        this.obtainAccessToken();
         System.out.println("+++++++++++++++++++++++++++"+tokenValue);
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.AUTHORIZATION,"Bearer "+tokenValue);
