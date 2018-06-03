@@ -10,10 +10,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.data.web.JsonPath;
 import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import springfox.documentation.spring.web.json.Json;
+
 import java.util.HashMap;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -40,37 +43,28 @@ public class UserControllerIntegrationTest {
     User user =  new User("test12345","test1","test1@gmail.com","firstname1","lastname1",123456,true,"5b02caf0199b3984491fb88b");
 
 
-//    @Before
-//    public void obtainAccessToken() {
-//        System.out.println("+++++++++++++++++++++++++++"+"HELLO");
-//        final HashMap<String, String> params = new HashMap<String, String>();
-//        params.put("grant_type", "password");
-//        params.put("scope", "read write");
-//        params.put("username", "testuser");
-//        params.put("password", "test");
-//        System.out.println("+++++++++++++++++++++++++++"+"HELLO1");
-//        final Response response = RestAssured.given()
-//                .auth()
-//                .preemptive()
-//                .basic("clientid", "secret")
-//                .and()
-//                .with()
-//                .params(params)
-//                .when()
-//                .post("/oauth/token");
-//        System.out.println("+++++++++++++++++++++++++++"+"HELLO2");
-//        tokenValue = response.jsonPath()
-//                .getString("access_token");
-//        System.out.println("+++++++++++++++++++++++++++"+"HELLO3");
-//    }
+    @Before
+    public void obtainAccessToken() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", "application/json;");
+        headers.set("Content-Type", "application/json");
+        headers.set("Authorization", "Basic Y2xpZW50aWQ6c2VjcmV0");
+        System.out.println("+++++++++++++++++++++++++++"+"HELLO1");
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        ResponseEntity<String> response = template.exchange("/oauth/token?username=testuser&password=test&grant_type=password", HttpMethod.POST,entity, String.class);
+        System.out.println("+++++++++++++++++++++++++++"+"HELLO2");
+        tokenValue = response.getBody().substring(17,693);
+        System.out.println("+++++++++++++++++++++++++++"+tokenValue);
+        System.out.println("+++++++++++++++++++++++++++"+response.getBody());
+    }
 
 // =========================================== Create New User ========================================
 
     @Test
     public void test_create_new_user_success(){
-        //System.out.println("+++++++++++++++++++++++++++"+tokenValue);
+        System.out.println("+++++++++++++++++++++++++++"+tokenValue);
         HttpHeaders headers = new HttpHeaders();
-        //headers.set(HttpHeaders.AUTHORIZATION,"Bearer "+tokenValue);
+        headers.set(HttpHeaders.AUTHORIZATION,"Bearer "+tokenValue);
         headers.set("Accept", "application/json;");
         headers.set("Content-Type", "application/json");
         HttpEntity<User> entity = new HttpEntity<User>(user,headers);
