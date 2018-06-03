@@ -51,7 +51,7 @@ public class UserControllerIntegrationTest {
                 .with()
                 .params(params)
                 .when()
-                .post("/oauth/token");
+                .post(BASE_URI + "/oauth/token");
 
         tokenValue = response.jsonPath()
                 .getString("access_token");
