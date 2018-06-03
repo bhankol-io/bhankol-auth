@@ -22,8 +22,8 @@ import static org.junit.Assert.assertThat;
  */
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = AuthServiceApplication.class)
-@WebAppConfiguration
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@WebAppConfiguration
 //@ActiveProfiles("dev")
 public class UserControllerIntegrationTest {
 
@@ -33,7 +33,7 @@ public class UserControllerIntegrationTest {
     private static final String BASE_URI = "http://localhost:8080";
     private String tokenValue = null;
 
-    User user =  new User("test123","test1","test1@gmail.com","firstname1","lastname1",123456,true,"5b02caf0199b3984491fb88b");
+    User user =  new User("test1234","test1","test1@gmail.com","firstname1","lastname1",123456,true,"5b02caf0199b3984491fb88b");
 
 
     @Before
@@ -51,7 +51,7 @@ public class UserControllerIntegrationTest {
                 .with()
                 .params(params)
                 .when()
-                .post(BASE_URI + "/oauth/token");
+                .post("/oauth/token");
 
         tokenValue = response.jsonPath()
                 .getString("access_token");
@@ -68,7 +68,7 @@ public class UserControllerIntegrationTest {
         headers.set("Accept", "application/json;");
         headers.set("Content-Type", "application/json");
         HttpEntity<User> entity = new HttpEntity<User>(user,headers);
-        ResponseEntity<User> response = template.exchange(BASE_URI+"/api/user", HttpMethod.POST,entity, User.class);
+        ResponseEntity<User> response = template.exchange("/api/user", HttpMethod.POST,entity, User.class);
         assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
     }
 
