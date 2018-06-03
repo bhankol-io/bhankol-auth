@@ -40,37 +40,37 @@ public class UserControllerIntegrationTest {
     User user =  new User("test12345","test1","test1@gmail.com","firstname1","lastname1",123456,true,"5b02caf0199b3984491fb88b");
 
 
-    @Before
-    public void obtainAccessToken() {
-        System.out.println("+++++++++++++++++++++++++++"+"HELLO");
-        final HashMap<String, String> params = new HashMap<String, String>();
-        params.put("grant_type", "password");
-        params.put("scope", "read write");
-        params.put("username", "testuser");
-        params.put("password", "test");
-        System.out.println("+++++++++++++++++++++++++++"+"HELLO1");
-        final Response response = RestAssured.given()
-                .auth()
-                .preemptive()
-                .basic("clientid", "secret")
-                .and()
-                .with()
-                .params(params)
-                .when()
-                .post("/oauth/token");
-        System.out.println("+++++++++++++++++++++++++++"+"HELLO2");
-        tokenValue = response.jsonPath()
-                .getString("access_token");
-        System.out.println("+++++++++++++++++++++++++++"+"HELLO3");
-    }
+//    @Before
+//    public void obtainAccessToken() {
+//        System.out.println("+++++++++++++++++++++++++++"+"HELLO");
+//        final HashMap<String, String> params = new HashMap<String, String>();
+//        params.put("grant_type", "password");
+//        params.put("scope", "read write");
+//        params.put("username", "testuser");
+//        params.put("password", "test");
+//        System.out.println("+++++++++++++++++++++++++++"+"HELLO1");
+//        final Response response = RestAssured.given()
+//                .auth()
+//                .preemptive()
+//                .basic("clientid", "secret")
+//                .and()
+//                .with()
+//                .params(params)
+//                .when()
+//                .post("/oauth/token");
+//        System.out.println("+++++++++++++++++++++++++++"+"HELLO2");
+//        tokenValue = response.jsonPath()
+//                .getString("access_token");
+//        System.out.println("+++++++++++++++++++++++++++"+"HELLO3");
+//    }
 
 // =========================================== Create New User ========================================
 
     @Test
     public void test_create_new_user_success(){
-        System.out.println("+++++++++++++++++++++++++++"+tokenValue);
+        //System.out.println("+++++++++++++++++++++++++++"+tokenValue);
         HttpHeaders headers = new HttpHeaders();
-        headers.set(HttpHeaders.AUTHORIZATION,"Bearer "+tokenValue);
+        //headers.set(HttpHeaders.AUTHORIZATION,"Bearer "+tokenValue);
         headers.set("Accept", "application/json;");
         headers.set("Content-Type", "application/json");
         HttpEntity<User> entity = new HttpEntity<User>(user,headers);
