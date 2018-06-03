@@ -40,7 +40,7 @@ public class UserControllerIntegrationTest {
     private static final String BASE_URI = "http://localhost:8080";
     private String tokenValue = null;
 
-    User user =  new User("test12345","test1","test1@gmail.com","firstname1","lastname1",123456,true,"5b02caf0199b3984491fb88b");
+    User user =  new User("test123456","test1","test1@gmail.com","firstname1","lastname1",123456,true,"5b02caf0199b3984491fb88b");
 
 
     @Before
