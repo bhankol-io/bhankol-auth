@@ -42,11 +42,13 @@ public class UserControllerIntegrationTest {
 
     @Before
     public void obtainAccessToken() {
+        System.out.println("+++++++++++++++++++++++++++"+"HELLO");
         final HashMap<String, String> params = new HashMap<String, String>();
         params.put("grant_type", "password");
         params.put("scope", "read write");
         params.put("username", "testuser");
         params.put("password", "test");
+        System.out.println("+++++++++++++++++++++++++++"+"HELLO1");
         final Response response = RestAssured.given()
                 .auth()
                 .preemptive()
@@ -56,10 +58,10 @@ public class UserControllerIntegrationTest {
                 .params(params)
                 .when()
                 .post("/oauth/token");
-
+        System.out.println("+++++++++++++++++++++++++++"+"HELLO2");
         tokenValue = response.jsonPath()
                 .getString("access_token");
-
+        System.out.println("+++++++++++++++++++++++++++"+"HELLO3");
     }
 
 // =========================================== Create New User ========================================
