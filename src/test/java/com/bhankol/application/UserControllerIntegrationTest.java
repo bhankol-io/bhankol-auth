@@ -7,6 +7,7 @@ import io.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
@@ -28,12 +29,15 @@ import static org.junit.Assert.assertThat;
 public class UserControllerIntegrationTest {
 
 
-    private TestRestTemplate template=new TestRestTemplate();
+    //private TestRestTemplate template=new TestRestTemplate();
+
+    @Autowired
+    private TestRestTemplate template;
 
     private static final String BASE_URI = "http://localhost:8080";
     private String tokenValue = null;
 
-    User user =  new User("test1234","test1","test1@gmail.com","firstname1","lastname1",123456,true,"5b02caf0199b3984491fb88b");
+    User user =  new User("test12345","test1","test1@gmail.com","firstname1","lastname1",123456,true,"5b02caf0199b3984491fb88b");
 
 
     @Before
