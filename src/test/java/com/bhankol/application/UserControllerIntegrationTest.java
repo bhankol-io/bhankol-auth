@@ -62,6 +62,7 @@ public class UserControllerIntegrationTest {
 
     @Test
     public void test_create_new_user_success(){
+        this.obtainAccessToken();
         System.out.println("+++++++++++++++++++++++++++"+tokenValue);
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.AUTHORIZATION,"Bearer "+tokenValue);
